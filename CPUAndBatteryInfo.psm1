@@ -99,19 +99,19 @@ function Get-BatteryInfo
     {
       Foreach ($i in $range) 
       {
-        $namespace = "root\WMI" 
+        $namespace = 'root\WMI' 
         Write-Verbose -Message "Connecting to $Computer"
         $Bat = Get-WmiObject -ComputerName $Computer -Class Win32_Battery
-        $BatStat =  Get-WmiObject -class BatteryStatus -computername $Computer -namespace $namespace 
+        $BatStat = Get-WmiObject -Class BatteryStatus -ComputerName $Computer -Namespace $namespace 
            
         $properties = [ordered]@{
-          'ComputerName'    = $Computer
+          'ComputerName'       = $Computer
           'Battery Availability' = $Bat.Availability
-          'Battery Status' = $Bstatus
-          'Battery Active' = $BatStat.Active
-          'Charge Rate'= $BatStat.ChargeRate
-          'Charging?' = $BatStat.Charging
-          'Power Online?' = $BatStat.PowerOnline   
+          'Battery Status'     = $Bat.Status
+          'Battery Active'     = $BatStat.Active
+          'Charge Rate'        = $BatStat.ChargeRate
+          'Charging?'          = $BatStat.Charging
+          'Power Online?'      = $BatStat.PowerOnline
         }
 
         $output = New-Object -TypeName PSObject -Property $properties
@@ -126,5 +126,3 @@ function Get-BatteryInfo
   {
   }
 }
-
-#svenvanrijen
