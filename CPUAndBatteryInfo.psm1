@@ -131,7 +131,7 @@ function Get-BatteryInfo
   }
 }
 
-function Get-CPUAnBatteryInfo
+function Get-CPUAndBatteryInfo
 {
   [OutputType([int])]
   Param
