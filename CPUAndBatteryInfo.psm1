@@ -51,8 +51,9 @@ function Get-CPUInfo
       {
         Write-Verbose -Message "Connecting to $Computer"
         $CPU = Get-WmiObject -ComputerName $Computer -Class Win32_Processor  
-            
+        $datetime = Get-Date    
         $properties = [ordered]@{
+          'Date and time'      = $datetime
           'ComputerName'      = $Computer
           'CPU Name'          = $CPU.Name
           'Current Clock Speed' = $CPU.CurrentClockSpeed
@@ -110,12 +111,14 @@ function Get-BatteryInfo
     {
       Foreach ($i in $range) 
       {
+        $datetime = Get-Date
         $namespace = 'root\WMI' 
         Write-Verbose -Message "Connecting to $Computer"
         $Bat = Get-WmiObject -ComputerName $Computer -Class Win32_Battery
         $BatStat = Get-WmiObject -Class BatteryStatus -ComputerName $Computer -Namespace $namespace 
            
         $properties = [ordered]@{
+          'Date and time'      = $datetime
           'ComputerName'       = $Computer
           'Battery Availability' = $Bat.Availability
           'Battery Status'     = $Bat.Status
@@ -178,11 +181,13 @@ function Get-CPUAndBatteryInfo
       {
         $namespace = 'root\WMI' 
         Write-Verbose -Message "Connecting to $Computer"
+        $datetime = Get-Date
         $CPU = Get-WmiObject -ComputerName $Computer -Class Win32_Processor
         $Bat = Get-WmiObject -ComputerName $Computer -Class Win32_Battery
         $BatStat = Get-WmiObject -Class BatteryStatus -ComputerName $Computer -Namespace $namespace 
            
         $properties = [ordered]@{
+          'Date and time'      = $datetime
           'ComputerName'       = $Computer
           'CPU Name'           = $CPU.Name
           'Current Clock Speed' = $CPU.CurrentClockSpeed
