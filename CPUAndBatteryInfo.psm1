@@ -49,10 +49,12 @@ function Get-CPUInfo
     {
       Foreach ($i in $range) 
       {
-        Write-Verbose -Message "Connecting to $Computer"
+        $datetime = Get-Date
+        Write-Verbose -Message "$datetime : Connecting to $Computer"
         $CPU = Get-WmiObject -ComputerName $Computer -Class Win32_Processor  
             
         $properties = [ordered]@{
+          'Date and time'     = $datetime
           'ComputerName'      = $Computer
           'CPU Name'          = $CPU.Name
           'Current Clock Speed' = $CPU.CurrentClockSpeed
@@ -98,8 +100,7 @@ function Get-BatteryInfo
   }
     
   Process
-  {
-  
+  {     
     Write-Host -Object 'Caution: this command can only be used on a laptop!' -ForegroundColor Yellow
     
     Start-Sleep -Seconds 5
@@ -111,11 +112,13 @@ function Get-BatteryInfo
       Foreach ($i in $range) 
       {
         $namespace = 'root\WMI' 
-        Write-Verbose -Message "Connecting to $Computer"
+        $datetime = Get-Date
+        Write-Verbose -Message "$datetime : Connecting to $Computer"
         $Bat = Get-WmiObject -ComputerName $Computer -Class Win32_Battery
         $BatStat = Get-WmiObject -Class BatteryStatus -ComputerName $Computer -Namespace $namespace 
            
         $properties = [ordered]@{
+          'Date and time'      = $datetime
           'ComputerName'       = $Computer
           'Battery Availability' = $Bat.Availability
           'Battery Status'     = $Bat.Status
@@ -177,12 +180,14 @@ function Get-CPUAndBatteryInfo
       Foreach ($i in $range) 
       {
         $namespace = 'root\WMI' 
-        Write-Verbose -Message "Connecting to $Computer"
+        $datetime = Get-Date
+        Write-Verbose -Message "$datetime : Connecting to $Computer"
         $CPU = Get-WmiObject -ComputerName $Computer -Class Win32_Processor
         $Bat = Get-WmiObject -ComputerName $Computer -Class Win32_Battery
         $BatStat = Get-WmiObject -Class BatteryStatus -ComputerName $Computer -Namespace $namespace 
            
         $properties = [ordered]@{
+          'Date and time'      = $datetime
           'ComputerName'       = $Computer
           'CPU Name'           = $CPU.Name
           'Current Clock Speed' = $CPU.CurrentClockSpeed
